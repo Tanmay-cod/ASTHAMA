@@ -1,0 +1,6 @@
+{
+  "name": "IoT Asthma Risk Prediction System",
+  "description": "Clinical decision-support dashboard fusing IoT physiological and environmental sensor data with explainable ML (SHAP) for early asthma risk prediction.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
