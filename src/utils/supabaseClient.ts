@@ -486,12 +486,13 @@ CREATE POLICY "Users can update own patient record"
   USING (auth.uid() = user_id) 
   WITH CHECK (auth.uid() = user_id);
 
--- Sensor Readings: Authenticated user isolation + IoT ingestion policy
+-- Sensor Readings: Live dashboard telemetry stream policy
 DROP POLICY IF EXISTS "Users can read own sensor readings" ON public.sensor_readings;
-CREATE POLICY "Users can read own sensor readings" 
+DROP POLICY IF EXISTS "Allow reading telemetry for live stream" ON public.sensor_readings;
+CREATE POLICY "Allow reading telemetry for live stream" 
   ON public.sensor_readings FOR SELECT 
-  TO authenticated 
-  USING (auth.uid()::text = user_id);
+  TO anon, authenticated 
+  USING (true);
 
 DROP POLICY IF EXISTS "Users can insert own sensor readings" ON public.sensor_readings;
 CREATE POLICY "Users can insert own sensor readings" 

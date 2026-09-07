@@ -99,6 +99,14 @@ export async function connectWebSerial(
       };
     }
 
+    const errMsg = err.message || '';
+    if (errMsg.toLowerCase().includes('failed to open serial port') || err.name === 'InvalidStateError') {
+      return {
+        success: false,
+        message: 'Failed to open serial port. The COM port is locked by another program (e.g. Arduino Serial Monitor, VSCode, or another browser tab). Close Arduino IDE/Serial Monitor and try again.'
+      };
+    }
+
     console.warn('Web Serial connection note:', err.message || err);
     return {
       success: false,
