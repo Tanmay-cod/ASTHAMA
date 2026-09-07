@@ -409,8 +409,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!isSupabaseStreaming || !supabaseConfig.url || !supabaseConfig.anonKey) return;
 
     let isMounted = true;
+    const targetUserId = patient?.user_id || patient?.id || 'usr_alex_01';
     const interval = setInterval(async () => {
-      const res = await fetchLatestSensorReadingFromSupabase();
+      const res = await fetchLatestSensorReadingFromSupabase(targetUserId);
       if (!isMounted || !res.success || !res.data) return;
 
       applySupabaseSensorRow(res.data);
@@ -420,7 +421,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       isMounted = false;
       clearInterval(interval);
     };
-  }, [isSupabaseStreaming, supabaseConfig.url, supabaseConfig.anonKey, applySupabaseSensorRow]);
+  }, [isSupabaseStreaming, supabaseConfig.url, supabaseConfig.anonKey, applySupabaseSensorRow, patient?.user_id, patient?.id]);
 
   // Sync patients and active patient to localStorage
   useEffect(() => {
